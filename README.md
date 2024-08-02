@@ -3,6 +3,21 @@ This plugin helps you set a custom inset for the window controls on macOS. Curre
 
 _This is done without any visible artifacts on resize._
 
+## Get the plugin
+Using the command line from crates.io:<br>
+`cargo add tauri-plugin-trafficlights-positioner`
+
+Or add it manually to `Cargo.toml`:
+```toml
+[target.'cfg(target_os = "macos")'.dependencies]
+tauri-plugin-trafficlights-positioner = "1.0.0"
+```
+
+With git:
+```toml
+[target.'cfg(target_os = "macos")'.dependencies]
+tauri-plugin-trafficlights-positioner = { git = "https://github.com/ItsEeleeya/tauri-plugin-trafficlights-positioner/" }
+```
 
 ## Usage
 ```rs
@@ -21,11 +36,8 @@ fn main() {
     .expect("error while running tauri application");
 }
 ```
-Cargo.toml:
-```toml
-[target.'cfg(target_os = "macos")'.dependencies]
-tauri-plugin-trafficlights-positioner = { git = "https://github.com/ItsEeleeya/tauri-plugin-trafficlights-positioner/" }
-```
+
+
 If you need extra customization (especially for Windows) use [clearlysid/tauri-plugin-decorum](https://github.com/clearlysid/tauri-plugin-decorum/)
 
 ## Credits
