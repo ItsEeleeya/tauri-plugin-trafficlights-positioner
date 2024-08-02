@@ -1,0 +1,72 @@
+{
+  "package": {
+    "productName": "Example App",
+    "version": "1.0.0"
+  },
+  "build": {
+    "withGlobalTauri": true,
+    "distDir": "../public",
+    "devPath": "../public"
+  },
+  "tauri": {
+    "bundle": {
+      "active": true,
+      "targets": "all",
+      "identifier": "com.tauri-plugin-macos-sheen.example",
+      "icon": [
+        "icons/32x32.png",
+        "icons/128x128.png",
+        "icons/128x128@2x.png",
+        "icons/icon.icns",
+        "icons/icon.ico"
+      ],
+      "resources": [],
+      "externalBin": [],
+      "copyright": "",
+      "category": "DeveloperTool",
+      "shortDescription": "",
+      "longDescription": "",
+      "deb": {
+        "depends": []
+      },
+      "macOS": {
+        "frameworks": [],
+        "exceptionDomain": "",
+        "signingIdentity": null,
+        "entitlements": null
+      },
+      "windows": {
+        "certificateThumbprint": null,
+        "digestAlgorithm": "sha256",
+        "timestampUrl": ""
+      }
+    },
+    "updater": {
+      "active": false
+    },
+    "allowlist": {
+      "all": false,
+      "window": {
+        "startDragging": true
+      }
+    },
+    "macOSPrivateApi": true,
+    "windows": [
+      {
+        "title": "Traffic Lights Positioner",
+        "width": 600,
+        "height": 380,
+        "minWidth": 400,
+        "minHeight": 380,
+        "resizable": true,
+        "fullscreen": false,
+        "transparent": false,
+        "hiddenTitle": true,
+        "titleBarStyle": "Overlay"
+      }
+    ],
+    "security": {
+      "csp": "default-src blob: data: filesystem: ws: wss: http: https: tauri: 'unsafe-eval' 'unsafe-inline' 'self' img-src: 'self'"
+    }
+  }
+}
