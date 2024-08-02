@@ -5,7 +5,9 @@ _This is done without any visible artifacts on resize._
 
 ## Get the plugin
 Using the command line from crates.io:<br>
-`cargo add tauri-plugin-trafficlights-positioner`
+```
+$ cargo add tauri-plugin-trafficlights-positioner
+```
 
 Or add it manually to `Cargo.toml`:
 ```toml
@@ -13,7 +15,7 @@ Or add it manually to `Cargo.toml`:
 tauri-plugin-trafficlights-positioner = "1.0.0"
 ```
 
-With git:
+Or get the latest using git:
 ```toml
 [target.'cfg(target_os = "macos")'.dependencies]
 tauri-plugin-trafficlights-positioner = { git = "https://github.com/ItsEeleeya/tauri-plugin-trafficlights-positioner/" }
