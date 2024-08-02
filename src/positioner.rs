@@ -60,6 +60,7 @@ fn position_traffic_lights(ns_window_handle: UnsafeWindowHandle, inset: &Logical
 #[derive(Debug)]
 struct WindowState<R: Runtime> {
     window: Window<R>,
+    traffic_lights_inset: LogicalPosition<f64>,
 }
 
 pub(crate) fn setup_nswindow_delegates<R: Runtime>(
@@ -87,17 +88,7 @@ pub(crate) fn setup_nswindow_delegates<R: Runtime>(
         func(ptr);
     }
 
-    fn with_inset_state<F: FnOnce(&mut LogicalPosition<f64>) -> T, T>(this: &Object, func: F) {
-        let ptr = unsafe {
-            let x: *mut c_void = *this.get_ivar("offset_box");
-            &mut *(x as *mut LogicalPosition<f64>)
-        };
-        func(ptr);
-    }
-
     unsafe {
-        // let offset = option_offset.unwrap();
-
         let ns_win = window
             .ns_window()
             .expect("NS Window should exist to mount traffic light delegate.")
@@ -127,9 +118,7 @@ pub(crate) fn setup_nswindow_delegates<R: Runtime>(
                         .expect("NS window should exist on state to handle resize")
                         as id;
 
-                    with_inset_state(&*this, |inset: &mut LogicalPosition<f64>| {
-                        update(&state.window, inset);
-                    });
+                    update(&state.window, &state.traffic_lights_inset);
                 });
 
                 let super_del: id = *this.get_ivar("super_delegate");
@@ -255,9 +244,7 @@ pub(crate) fn setup_nswindow_delegates<R: Runtime>(
                         .emit("did-exit-fullscreen", ())
                         .expect("Failed to emit event");
 
-                    with_inset_state(&*this, |inset: &mut LogicalPosition<f64>| {
-                        update(&state.window, &inset);
-                    });
+                    update(&state.window, &state.traffic_lights_inset);
                 });
 
                 let super_del: id = *this.get_ivar("super_delegate");
@@ -317,9 +304,11 @@ pub(crate) fn setup_nswindow_delegates<R: Runtime>(
 
         let window_label = window.label().to_string();
 
-        let app_state = WindowState { window };
+        let app_state = WindowState {
+            window,
+            traffic_lights_inset,
+        };
         let app_box = Box::into_raw(Box::new(app_state)) as *mut c_void;
-        let offset_box = Box::into_raw(Box::new(traffic_lights_inset)) as *mut c_void;
         let random_str: String = rand::thread_rng()
             .sample_iter(&Alphanumeric)
             .take(20)
@@ -333,7 +322,6 @@ pub(crate) fn setup_nswindow_delegates<R: Runtime>(
         ns_win.setDelegate_(delegate!(&delegate_name, {
             window: id = ns_win,
             app_box: *mut c_void = app_box,
-            offset_box: *mut c_void = offset_box,
             toolbar: id = cocoa::base::nil,
             super_delegate: id = current_delegate,
             (windowShouldClose:) => on_window_should_close as extern fn(&Object, Sel, id) -> BOOL,
