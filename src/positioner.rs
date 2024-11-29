@@ -13,7 +13,7 @@
  */
 use objc::{msg_send, sel, sel_impl};
 use rand::{distributions::Alphanumeric, Rng};
-use tauri::{LogicalPosition, Runtime, Window};
+use tauri::{Emitter, LogicalPosition, Runtime, Window};
 
 struct UnsafeWindowHandle(*mut std::ffi::c_void);
 unsafe impl Send for UnsafeWindowHandle {}
@@ -111,7 +111,7 @@ pub(crate) fn setup_nswindow_delegates<R: Runtime>(
 
         extern "C" fn on_window_did_resize<R: Runtime>(this: &Object, _cmd: Sel, notification: id) {
             unsafe {
-                with_window_state(&*this, |state: &mut WindowState<R>| {
+                with_window_state(this, |state: &mut WindowState<R>| {
                     let _id = state
                         .window
                         .ns_window()
@@ -204,7 +204,7 @@ pub(crate) fn setup_nswindow_delegates<R: Runtime>(
             notification: id,
         ) {
             unsafe {
-                with_window_state(&*this, |state: &mut WindowState<R>| {
+                with_window_state(this, |state: &mut WindowState<R>| {
                     state
                         .window
                         .emit("did-enter-fullscreen", ())
@@ -221,7 +221,7 @@ pub(crate) fn setup_nswindow_delegates<R: Runtime>(
             notification: id,
         ) {
             unsafe {
-                with_window_state(&*this, |state: &mut WindowState<R>| {
+                with_window_state(this, |state: &mut WindowState<R>| {
                     state
                         .window
                         .emit("will-enter-fullscreen", ())
@@ -238,7 +238,7 @@ pub(crate) fn setup_nswindow_delegates<R: Runtime>(
             notification: id,
         ) {
             unsafe {
-                with_window_state(&*this, |state: &mut WindowState<R>| {
+                with_window_state(this, |state: &mut WindowState<R>| {
                     state
                         .window
                         .emit("did-exit-fullscreen", ())
@@ -257,7 +257,7 @@ pub(crate) fn setup_nswindow_delegates<R: Runtime>(
             notification: id,
         ) {
             unsafe {
-                with_window_state(&*this, |state: &mut WindowState<R>| {
+                with_window_state(this, |state: &mut WindowState<R>| {
                     state
                         .window
                         .emit("will-exit-fullscreen", ())
