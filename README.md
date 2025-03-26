@@ -1,6 +1,13 @@
 # Tauri Plugin Traffic Lights Positioner
 This plugin helps you set a custom inset for the window controls on macOS. Currently only for Tauri v1.*
 
+> [!NOTE]
+> Tauri version 2.4.0 now makes the traffic light position option from Tao available! 🎉
+> Checkout the release [here](https://github.com/tauri-apps/tauri/releases/tag/tauri-v2.4.0)
+
+> [!CAUTION]
+> This repository is now archived and will recieve no further updates.
+
 _This is done without any visible artifacts on resize._
 
 ## Get the plugin
